@@ -52,11 +52,9 @@ class RoomList extends Component {
         </aside>
         <div className='create-room'>
           <form className='form' onSubmit={this.handleSubmit}>
-           <fieldset>
             <legend>Create Chat Room</legend>
             <input type='text'placeholder='enter chat room name' value={this.state.newRoomName} onChange={(e) => this.handleChange(e)}/>
             <button type ='submit'>Add</button>
-           </fieldset>
           </form>
         </div>
       </div>

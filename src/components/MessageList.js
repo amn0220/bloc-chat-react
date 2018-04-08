@@ -13,8 +13,8 @@ class MessageList extends Component {
           roomId: ''}]
         };
       this.messagesRef = this.props.firebase.database().ref('messages');
-      this.state.messages.sentAt = this.props.firebase.database.ServerValue.TIMESTAMP;
     };
+
     componentDidMount() {
      this.messagesRef.on('child_added', snapshot => {
        const message = snapshot.val();
@@ -22,6 +22,29 @@ class MessageList extends Component {
        this.setState({ messages: this.state.messages.concat( message ) });
      });
     }
+
+    handleChange(e){
+      this.setState({
+        username: this.props.user,
+        content: e.target.value,
+        sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
+        roomId: this.props.activeRoomName});
+    }
+
+    handleSubmit(e){
+      e.preventDefault(e);
+       if (!this.state.content) {return}
+    }
+
+    createMessage(e) {
+      e.preventDefault();
+      this.messagesRef.push({
+        username: this.state.username,
+        content: this.state.content,
+        sentAt: this.state.sentAt,
+        roomId: this.props.activeRoomName});
+    }
+
     render(){
       const activeRoomName = this.props.activeRoomName;
       const messageList = this.state.messages
@@ -32,8 +55,13 @@ class MessageList extends Component {
         </div>
       })
       return (
-      <div className='all-messages'>
-       <ul>{messageList}</ul>
+      <div className='chatroom-messages'>
+       <div>{messageList}</div>
+       <form className='new-messages' onSubmit={(e) => this.handleSubmit(e)}>
+         <legend>Create New Message</legend>
+         <input type='text'placeholder='enter new message' value={this.state.content} onChange={(e) => this.handleChange(e)}/>
+         <button type ='submit' onClick={(e) => this.createMessage(e)}>Send</button>
+       </form>
       </div>
     );
     }

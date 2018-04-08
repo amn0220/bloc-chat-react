@@ -11,20 +11,12 @@ class User extends Component{
 signIn() {
   const provider = new this.props.firebase.auth.GoogleAuthProvider();
   this.props.firebase.auth().signInWithPopup( provider );
-<<<<<<< HEAD
   this.props.setUser(this.props.currentUser);
-=======
-  this.props.setUser();
->>>>>>> checkpoint-5-set-username
 }
 
 signOut() {
   this.props.firebase.auth().signOut();
-<<<<<<< HEAD
   this.props.setUser(null);
-=======
-  this.props.setUser('Guest');
->>>>>>> checkpoint-5-set-username
 }
 
 componentDidMount() {
