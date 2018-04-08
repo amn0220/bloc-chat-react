@@ -19,11 +19,7 @@ class MessageList extends Component {
      this.messagesRef.on('child_added', snapshot => {
        const message = snapshot.val();
        message.key = snapshot.key;
-<<<<<<< HEAD
        this.setState({ messages: this.state.messages.concat( message ) });
-=======
-       this.setState({ messages: this.state.messages.concat(message) });
->>>>>>> checkpoint-4-list-messages
      });
     }
     render(){
@@ -31,7 +27,9 @@ class MessageList extends Component {
       const messageList = this.state.messages
       .filter(message => message.roomId === activeRoomName)
       .map(message => {
-        return <li className='message' key={message.key}>{message.content}</li>
+        return <div className='message-info'><p key={message.key}>{message.content}</p>
+        <p>{message.username}</p><p>{message.sentAt}</p>
+        </div>
       })
       return (
       <div className='all-messages'>
