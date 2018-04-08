@@ -7,10 +7,12 @@ class RoomList extends Component {
 
       this.state = {
           rooms: [],
-          newRoomName: ''
+          newRoomName: '',
+          name: ''
         };
-      this.handleChange =this.handleChange.bind(this);
-      this.roomsRef = this.props.firebase.database().ref('rooms');
+
+        this.handleChange =this.handleChange.bind(this);
+        this.roomsRef = this.props.firebase.database().ref('rooms');
     };
 
 
@@ -26,32 +28,36 @@ class RoomList extends Component {
      this.setState({ newRoomName: e.target.value });
    }
 
-   handleSubmit(e) {
+   handleSubmit = (e) => {
       e.preventDefault();
-     alert('A new chat room was created');
+      this.roomsRef.push({ name: this.state.newRoomName});
+      alert('A new chat room was created');
    }
 
-   createChatRoom() {
-        this.roomsRef.push({ name: this.state.newRoomName});
-  }
+   selectRoom(key){
+     this.props.activeRoomName(key);
+   }
+
 
   render() {
       return (
         <div className='room-list'>
         <h1>Rooms</h1>
+        <aside className='rooms'>
         <ul>
         {this.state.rooms.map( (room, index) => {
           return (
-            <li key={index}>{room.name}</li>
+            <li key={room.key} onClick={(e) => this.selectRoom(room, e)}>{room.name}</li>
           )
         })}
         </ul>
+        </aside>
         <div className='create-room'>
           <form className='form' onSubmit={this.handleSubmit}>
            <fieldset>
             <legend>Create Chat Room</legend>
             <input type='text'placeholder='enter chat room name' value={this.state.newRoomName} onChange={(e) => this.handleChange(e)}/>
-            <button type ='submit' onClick={() => this.createChatRoom()}>Add</button>
+            <button type ='submit'>Add</button>
            </fieldset>
           </form>
         </div>
