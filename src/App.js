@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as firebase from 'firebase';
 import RoomList from './components/RoomList';
 import MessageList from './components/MessageList';
+import User from './components/User/User'
 import './App.css';
 
 
@@ -20,21 +21,30 @@ class App extends Component {
     super(props)
 
     this.state = {
-      activeRoomName: ''
+      activeRoomName: '',
+      user: null
     };
   }
+
 setActiveRoom(room){
   this.setState({ activeRoomName: room})
 }
 
-  render() {
+setUser(user){
+  this.setState({ user: user })
+}
+
+render() {
     const showMessages = this.state.activeRoomName;
+    const currentUser = this.state.user === null ? 'Guest' : this.state.user.displayName;
 
     return (
       <div className='App'>
+      <h1 className='app-title'>Bloc Chat</h1>
+      <User firebase={firebase} setUser={this.setUser.bind(this)} currentUser={currentUser}/>
       <RoomList firebase={firebase} activeRoomName={this.setActiveRoom.bind(this)}/>
       <div className='active-room'>
-      <h1>{this.state.activeRoomName.name}</h1>
+      <h2>{this.state.activeRoomName.name}</h2>
       {showMessages ? (<MessageList firebase={firebase} activeRoomName={this.state.activeRoomName.key}/>) : (null)}
       </div>
       </div>
