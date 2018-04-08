@@ -10,8 +10,9 @@ class RoomList extends Component {
           newRoomName: '',
           name: ''
         };
-      this.handleChange =this.handleChange.bind(this);
-      this.roomsRef = this.props.firebase.database().ref('rooms');
+
+        this.handleChange =this.handleChange.bind(this);
+        this.roomsRef = this.props.firebase.database().ref('rooms');
     };
 
 
@@ -30,12 +31,13 @@ class RoomList extends Component {
    handleSubmit = (e) => {
       e.preventDefault();
       this.roomsRef.push({ name: this.state.newRoomName});
-     alert('A new chat room was created');
+      alert('A new chat room was created');
    }
 
-  selectRoom(key){
-    this.props.activeRoomName(key);
-  }
+   selectRoom(key){
+     this.props.activeRoomName(key);
+   }
+
 
   render() {
       return (
