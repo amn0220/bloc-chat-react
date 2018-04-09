@@ -45,7 +45,7 @@ render() {
       <RoomList firebase={firebase} activeRoomName={this.setActiveRoom.bind(this)}/>
       <div className='active-room'>
       <h2>{this.state.activeRoomName.name}</h2>
-      {showMessages ? (<MessageList firebase={firebase} activeRoomName={this.state.activeRoomName.key}/>) : (null)}
+      {showMessages ? (<MessageList firebase={firebase} activeRoomName={this.state.activeRoomName.key} user={currentUser}/>) : (null)}
       </div>
       </div>
     );
