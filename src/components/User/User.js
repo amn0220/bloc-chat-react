@@ -11,7 +11,6 @@ class User extends Component{
 signIn() {
   const provider = new this.props.firebase.auth.GoogleAuthProvider();
   this.props.firebase.auth().signInWithPopup( provider );
-  this.props.setUser();
 }
 
 signOut() {
